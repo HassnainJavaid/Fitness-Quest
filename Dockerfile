@@ -1,4 +1,3 @@
-cat > Dockerfile << 'DOCKERFILE'
 # Simple Dockerfile for C++ on Render
 FROM ubuntu:22.04
 
@@ -20,6 +19,3 @@ EXPOSE $PORT
 
 # Run the app
 CMD ["./fitness_quest"]
-DOCKERFILE
-
-echo "✅ Updated Dockerfile for simplicity"
