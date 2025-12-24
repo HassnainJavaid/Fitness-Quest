@@ -1,0 +1,73 @@
+# Ignore ALL unnecessary files for Docker build
+
+# Version control
+.git/
+.gitignore
+.github/
+
+# Build artifacts
+*.o
+*.so
+*.a
+*.lo
+*.la
+*.obj
+*.exe
+*.out
+*.app
+*.dSYM/
+
+# Compiled binaries
+fitness_quest
+test_compile
+*.bin
+
+# Dependencies
+vendor/
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment files (except production)
+.env
+.env.local
+.env.development
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Backup files
+*.backup
+*.bak
+backup/
+data/local/
+
+# Documentation
+docs/
+*.md
+*.txt
+LICENSE
+
+# Test files
+test/
+tests/
+*.test

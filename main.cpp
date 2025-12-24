@@ -1,5 +1,5 @@
 // ============================================================================
-// CORRECTED MAIN.CPP - FITNESS QUEST BACKEND
+// CORRECTED MAIN.CPP - FITNESS QUEST BACKEND (RENDER-READY)
 // Compile: g++ -std=c++17 -o fitness_quest main.cpp -lcpprest -lssl -lcrypto -pthread
 // ============================================================================
 
@@ -8,6 +8,7 @@
 #include <signal.h>
 #include <thread>
 #include <chrono>
+#include <cstdlib>  // ADD THIS LINE for std::getenv
 
 // Include headers in correct order
 #include "config.hpp"
@@ -72,11 +73,25 @@ int main(int argc, char* argv[]) {
         std::cout << "🚦 Setting up routes...\n";
         router = std::make_unique<FitnessQuest::Routes::Router>(database, syncEngine);
         
-        // Set up HTTP listener
-        auto env = std::make_shared<FitnessQuest::Config::Environment>();
+        // ============================================================
+        // 🔧 CRITICAL FIX FOR RENDER: Get port from environment variable
+        // ============================================================
+        // Get port from environment variable (Render sets PORT=10000)
+        const char* port_env = std::getenv("PORT");
+        int port = port_env ? std::atoi(port_env) : 8080;  // Default to 8080 if not set
+        
+        // Use 0.0.0.0 to bind to all interfaces (REQUIRED for Render)
         std::string host = "http://0.0.0.0";
-        int port = env->getServerPort();
         std::string address = host + ":" + std::to_string(port);
+        
+        // Debug output
+        std::cout << "🔧 Server binding to: " << address << std::endl;
+        if (port_env) {
+            std::cout << "📡 PORT from environment: " << port_env << std::endl;
+        } else {
+            std::cout << "📡 Using default port: 8080" << std::endl;
+        }
+        // ============================================================
         
         listener = std::make_unique<http_listener>(address);
         
